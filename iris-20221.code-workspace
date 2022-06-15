@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"name": "Project1 - iris-52774:samples",
+			"uri": "isfs://iris-52774:samples/?project=Project1"
+		},
+		{
+			"name": "iris-52774:USER",
+			"uri": "isfs-readonly://iris-52774:user/"
+		}
+	],
+	"settings": {
+	}
+}

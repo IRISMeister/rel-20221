@@ -1,0 +1,35 @@
+ROUTINE test
+	Set file="C:\InterSystems\IRIS20221\trace\iristrace_19400.txt"
+	Set file="C:\InterSystems\IRIS20221\trace\iristrace_6072.txt"
+
+	Set rs=##class(%ResultSet).%New("%SYS.Trace:ReadFile")
+	Do rs.Execute(file,"s")
+
+	If rs.%Next() {
+	Set LastTOffset=rs.%Get("TOffset") ; time offset from start in microseconds
+	Set Event=rs.%Get("Event")
+	Set GlobalRef=rs.%Get("GlobalRef")
+	Set SrcLine=rs.%Get("SrcLine")
+	Set LineAndRoutine=rs.%Get("LineAndRoutine")
+	 
+
+		While(rs.%Next()) {
+			Set TOffset=rs.%Get("TOffset")
+			If (GlobalRef'="") {
+				w TOffset-LastTOffset, " ",Event, " ", GlobalRef,!
+			}
+			If (SrcLine'="") {
+				w TOffset-LastTOffset, " ",Event, " ", SrcLine,!
+			}
+			If (LineAndRoutine'="") {
+				w TOffset-LastTOffset, " ",Event, " ", LineAndRoutine,!
+			}
+			Set Event=rs.%Get("Event")
+			Set GlobalRef=rs.%Get("GlobalRef")
+			Set SrcLine=rs.%Get("SrcLine")
+			Set LineAndRoutine=rs.%Get("LineAndRoutine")
+			Set LastTOffset=TOffset
+
+		}
+	}
+
