@@ -1,5 +1,4 @@
 ROUTINE test
-	Set file="C:\InterSystems\IRIS20221\trace\iristrace_19400.txt"
 	Set file="C:\InterSystems\IRIS20221\trace\iristrace_6072.txt"
 
 	Set rs=##class(%ResultSet).%New("%SYS.Trace:ReadFile")

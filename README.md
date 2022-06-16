@@ -50,6 +50,8 @@ Apache Kafka用のインバウンド、アウトバウンドアダプターお�
 ### 埋め込みPython
 言語としてObjectScriptが使用できるあらゆる場面でPythonを使用可能になります。
 
+使用例) [ePy.Test.cls](src/Sample/ePy/Test.cls)
+
 > 実行環境としてのIRISとPythonは類似点が多く(インタプリタ、c言語実装、オブジェクトモデル)、同一プロセス空間で動作させるなど、他言語に比べて踏み込んだ統合を行っています。
 
 Python Gateway(PEX)やPython SDKを置き換えるものではありません。
@@ -403,3 +405,5 @@ Reading TRACE file C:\InterSystems\IRIS20221\trace\iristrace_16816.txt
                  src:  Kill ^a
 0.001582:        GloRef at +2^app, ^a
 ```
+
+[APIを使用](src/test.mac)して独自出力を作成することも可能です。
