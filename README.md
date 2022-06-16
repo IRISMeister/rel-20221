@@ -238,6 +238,14 @@ SELECT * FROM Aviation.Event WHERE EventDate < '2004-05-01' AND LocationCountry 
 2022/06/15  10:01                49 iris.lck
 ```
 
+ミラージャーナルファイルもプライマリ、バックアップ共に同様に圧縮されます。
+```
+-rw-rw---- 1 irisowner irisowner 216K Jun 17 01:07 20220617.001z
+-rw-rw---- 1 irisowner irisowner 1.3M Jun 17 01:16 MIRROR-MIRRORSET-20220617.001z
+-rw-rw---- 1 irisowner irisowner  80K Jun 17 01:16 MIRROR-MIRRORSET-20220617.002z
+-rw-rw---- 1 irisowner irisowner 1.0M Jun 17 01:19 MIRROR-MIRRORSET-20220617.003
+```
+
 実際の顧客のケースでは、ジャーナルサイズが85%縮小され、信頼性を損なうことなく、EBSストレージ代金を2,000 USドル/月削減出来ました。
 ![journal-compression](images/journal-compression.png)
 
