@@ -39,9 +39,36 @@ https://www.intersystems.com/resources/whats-new-in-intersystems-iris-2022-1
 # 開発者向け
 
 ## Kafkaメッセージのサポート
-Apache Kafka用のインバウンド、アウトバウンドアダプターおよび、ライブラリクラスを提供します。
+Apache Kafka用のインバウンド・アウトバウンドアダプター、ビジネスサービス、ビジネスオペレーションおよび、低レベルなAPIを提供します。
 
 これらを使用して、プロダクション環境、非プロダクション環境を問わず、kafkaの持つ、高速なデータパイプライン、ストリームに対する分析、データ投入などの機能を容易に利用できるようになります。
+
+### プロダクション用途
+インバウンドアダプタは、Kafkaのコンシューマ機能を提供します。
+
+アウトバウンドアダプタは、Kafkaのプロデューサ機能を提供します。
+
+### 低レベルなAPI
+
+Kafkaのコンシューマ、プロデューサ機能を持つ、低レベルAPIを提供します。
+
+```
+Set settings = ##class(%External.Messaging.KafkaSettings).%New()
+Set settings.username = "amandasmith"
+Set settings.password = "234sdsge"
+Set settings.servers = "100.0.70.179:9092, 100.0.70.089:7070"
+Set settings.clientId = "BazcoApp"
+Set client = ##class(%External.Messaging.Client).CreateClient(settings, .tSC)
+
+Set topic = "quickstart-events"
+Set value = "MyMessage", key = "OptionalTag"
+Set msg = ##class(%External.Messaging.KafkaMessage).%New()
+Set msg.topic = topic
+Set msg.value = value
+Set msg.key = key
+
+Set tSC = client.SendMessage(msg)
+```
 
 > Kafkaに関して、開発者コミュニティに複数の寄稿がありますが、それらとは別にKafkaとの接続性を製品として提供するものになります。
 
@@ -276,86 +303,86 @@ InterSystems Reportsとは帳票作成エンジンであるZEN Report(既にオ�
 ## クラウドコネクタ
 クラウド上でのIRISの管理を容易にするために、新たに下記のコネクタ(アダプタ)を提供いたします。
 
-1. オブジェクトストレージ
+### オブジェクトストレージ
 
-	- アダプタ
-	S3,Azure Blob, Google Cloud Storageの読み書きのためにインバウンド、アウトバウンドアダプタを提供します。
+#### プロダクション用途
 
-	インバウンドアダプタは、指定したパターンに合致するオブジェクト(群)を取得し、ビジネスサービスのコールバック関数に、その内容をストリームとして提供します。  
-	アウトバウンドアダプタはUpload, Deleteを実行可能です。
+S3,Azure Blob, Google Cloud Storageの読み書きのためにインバウンド、アウトバウンドアダプタを提供します。
 
-	> アダプタはJava PEXを使用して実装されています。
+インバウンドアダプタは、指定したパターンに合致するオブジェクト(群)を取得し、ビジネスサービスのコールバック関数に、その内容をストリームとして提供します。  
+アウトバウンドアダプタはUpload, Deleteを実行可能です。
 
-	- 低レベルなAPI
+> アダプタはJava PEXを使用して実装されています。
 
-	同等な機能を持つ、低レベルAPIを提供します。
+#### 低レベルなAPI
 
-	```
-	Set bucketName = "my-bucket"
-	Set blobName = "test.txt"
-	// Cloud Storage Client作成 (クラウドプロバイダの種類は第3引数の内容で判断。この場合はAWS S3用)
-	Set myClient = ##class(%Net.Cloud.Storage.Client).CreateClient(,0,"C:\Users\irisowner\.aws\config", "ap-northeast-1", .tSC)
+同等な機能を持つ、低レベルAPIを提供します。
 
-	If myClient.BucketExists(bucketName){
-		// S3にファイルをアップロード	
-		Do myClient.UploadBlobFromFile(bucketName, blobName, "c:\temp\test.txt")
+```
+Set bucketName = "my-bucket"
+Set blobName = "test.txt"
+// Cloud Storage Client作成 (クラウドプロバイダの種類は第3引数の内容で判断。この場合はAWS S3用)
+Set myClient = ##class(%Net.Cloud.Storage.Client).CreateClient(,0,"C:\Users\irisowner\.aws\config", "ap-northeast-1", .tSC)
 
-		// 指定バケット内のオブジェクトを列挙
-		Set blobs=myClient.ListBlobs(bucketName)
-		For i=1:1:blobs.Size {
-			Set blob=blobs.GetAt(i)
-			w blob.name," ",blob.size," ",blob.updateTime,!
-		}
+If myClient.BucketExists(bucketName){
+	// S3にファイルをアップロード	
+	Do myClient.UploadBlobFromFile(bucketName, blobName, "c:\temp\test.txt")
+
+	// 指定バケット内のオブジェクトを列挙
+	Set blobs=myClient.ListBlobs(bucketName)
+	For i=1:1:blobs.Size {
+		Set blob=blobs.GetAt(i)
+		w blob.name," ",blob.size," ",blob.updateTime,!
 	}
-	
-	// clientをclose
-	Do myClient.Close()
-	```
+}
 
-	詳細は[こちら](https://docs.intersystems.com/iris20221/csp/docbook/DocBook.UI.Page.cls?KEY=ECLOUD_intro)をご覧ください。
+// clientをclose
+Do myClient.Close()
+```
 
-2. Cloudwatch
+詳細は[こちら](https://docs.intersystems.com/iris20221/csp/docbook/DocBook.UI.Page.cls?KEY=ECLOUD_intro)をご覧ください。
 
-	Cloudwatchへの出力のための、アウトバウンドアダプタおよびビジネスオペレーションを提供します。下記のaws cliコマンドに相当します。
+### Cloudwatch
 
-	```
-	>aws cloudwatch put-metric-data --namespace MyNameSpace --metric-name TestMetric \ 
-	 --dimensions TestKey=TestValue --value 100
-	```
+Cloudwatchへの出力のための、アウトバウンドアダプタおよびビジネスオペレーションを提供します。下記のaws cliコマンドに相当します。
 
-	Cloudwatchアウトバウンドアダプタ[EnsLib.AmazonCloudWatch.OutboundAdapter](https://docs.intersystems.com/iris20221/csp/documatic/%25CSP.Documatic.cls?&LIBRARY=ENSLIB&CLASSNAME=EnsLib.AmazonCloudWatch.OutboundAdapter)はCloudwatchが公開しているPutMetricData APIを呼び出すために、下記のメソッドを提供しています。
-	
-	```
-	Method PutMetricData(namespace As %String, metricName As %String,
-						metricValue As %Numeric, metricUnit As %String,
-						dims As %String = "") As %Status
-	```
+```
+>aws cloudwatch put-metric-data --namespace MyNameSpace --metric-name TestMetric \ 
+	--dimensions TestKey=TestValue --value 100
+```
 
-	ビジネスオペレーションは[EnsLib.AmazonCloudWatch.MetricDataOperation](https://docs.intersystems.com/iris20221/csp/documatic/%25CSP.Documatic.cls?&LIBRARY=ENSLIB&CLASSNAME=EnsLib.AmazonCloudWatch.MetricDataOperation)です。
+Cloudwatchアウトバウンドアダプタ[EnsLib.AmazonCloudWatch.OutboundAdapter](https://docs.intersystems.com/iris20221/csp/documatic/%25CSP.Documatic.cls?&LIBRARY=ENSLIB&CLASSNAME=EnsLib.AmazonCloudWatch.OutboundAdapter)はCloudwatchが公開しているPutMetricData APIを呼び出すために、下記のメソッドを提供しています。
 
-	詳細は[こちら](https://docs.intersystems.com/iris20221/csp/docbook/Doc.View.cls?KEY=AECW)をご覧ください。
-	
-	> 2022.1ドキュメントより「現在使用できるのはPutMetricDataのみです。PutMetricAlarmは将来インターフェースが変更される可能性があります。」
+```
+Method PutMetricData(namespace As %String, metricName As %String,
+					metricValue As %Numeric, metricUnit As %String,
+					dims As %String = "") As %Status
+```
 
-3. SNS(Amazon Simple Notification Service)
+ビジネスオペレーションは[EnsLib.AmazonCloudWatch.MetricDataOperation](https://docs.intersystems.com/iris20221/csp/documatic/%25CSP.Documatic.cls?&LIBRARY=ENSLIB&CLASSNAME=EnsLib.AmazonCloudWatch.MetricDataOperation)です。
 
-	SNSへの出力のための、アウトバウンドアダプタおよびビジネスオペレーションを提供します。下記のaws cliコマンドに相当します。
+詳細は[こちら](https://docs.intersystems.com/iris20221/csp/docbook/Doc.View.cls?KEY=AECW)をご覧ください。
 
-	```
-	aws sns publish --topic-arn arn:aws:sns:ap-northeast-1:[AWSアカウントID]:my_topic \
-	 --subject "Test mail" --message "Hello World"
-	```
+> 2022.1ドキュメントより「現在使用できるのはPutMetricDataのみです。PutMetricAlarmは将来インターフェースが変更される可能性があります。」
 
-	SNSアウトバウンドアダプタ[EnsLib.AmazonSNS.OutboundAdapter](https://docs.intersystems.com/iris20221/csp/documatic/%25CSP.Documatic.cls?LIBRARY=ENSLIB&CLASSNAME=EnsLib.AmazonSNS.OutboundAdapter)はSNSが公開しているpublish APIを呼び出すために、下記のメソッドを提供しています
+### SNS(Amazon Simple Notification Service)
 
-	```
-	Set tSC = ..Adapter.Publish(..ARNTopic, request.Message, ..Subject)
-	```
+SNSへの出力のための、アウトバウンドアダプタおよびビジネスオペレーションを提供します。下記のaws cliコマンドに相当します。
 
-	ビジネスオペレーションは[EnsLib.AmazonSNS.BusinessOperation](https://docs.intersystems.com/iris20221/csp/documatic/%25CSP.Documatic.cls?&LIBRARY=ENSLIB&CLASSNAME=EnsLib.AmazonSNS.BusinessOperation)です。
+```
+aws sns publish --topic-arn arn:aws:sns:ap-northeast-1:[AWSアカウントID]:my_topic \
+	--subject "Test mail" --message "Hello World"
+```
 
-	詳細は[こちら](https://docs.intersystems.com/iris20221/csp/docbook/Doc.View.cls?KEY=EMESSAGE_sns)をご覧ください。
+SNSアウトバウンドアダプタ[EnsLib.AmazonSNS.OutboundAdapter](https://docs.intersystems.com/iris20221/csp/documatic/%25CSP.Documatic.cls?LIBRARY=ENSLIB&CLASSNAME=EnsLib.AmazonSNS.OutboundAdapter)はSNSが公開しているpublish APIを呼び出すために、下記のメソッドを提供しています
 
+```
+Set tSC = ..Adapter.Publish(..ARNTopic, request.Message, ..Subject)
+```
+
+ビジネスオペレーションは[EnsLib.AmazonSNS.BusinessOperation](https://docs.intersystems.com/iris20221/csp/documatic/%25CSP.Documatic.cls?&LIBRARY=ENSLIB&CLASSNAME=EnsLib.AmazonSNS.BusinessOperation)です。
+
+詳細は[こちら](https://docs.intersystems.com/iris20221/csp/docbook/Doc.View.cls?KEY=EMESSAGE_sns)をご覧ください。
 	
 ## IKO (InterSystems Kubernetes Operator)
 IRISのKubernetesへのデプロイを容易にするために、新たに下記の機能を提供します。
