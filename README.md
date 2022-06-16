@@ -399,6 +399,15 @@ SAMに関しては、[こちら](https://jp.community.intersystems.com/node/4984
 
 [ロックダウンバージョン](https://docs.intersystems.com/iris20221/csp/docbook/DocBook.UI.Page.cls?KEY=ADOCK#ADOCK_iris_images_password_lockeddown)のIRISおよびWeb Gatewayをデプロイできます。Web GatewayはNginxもしくはApache版を選択可能です。
 
+ロックダウンバージョンのIRISは、通常版のirisコンテナと下記の点で異なります。
+
+- インストール時のセキュリティレベルでロックダウンを選択してあります
+- 組み込みのApacheサーバを起動しません
+
+>ロックダウン、通常版を問わず、2021.2以降のirisコンテナは、安全性強化のために下記変更を行っています。  
+>インストールユーザ: root → irisowner  
+>所有、実行ユーザ: root, irisowner, irisuser → irisowner
+
 ### 非永続ボリュームおよび永続ボリューム
 
 非永続ボリューム、永続ボリュームいずれへのデプロイが可能です。
