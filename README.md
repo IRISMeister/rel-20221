@@ -70,7 +70,7 @@ Set msg.key = key
 Set tSC = client.SendMessage(msg)
 ```
 
-> Kafkaに関して、開発者コミュニティに複数の寄稿がありますが、それらとは別にKafkaとの接続性を製品として提供するものになります。
+> Kafkaとの接続に関して、開発者コミュニティに多数の寄稿がありますが、それらとは別にKafkaとの接続性を製品として提供するものになります。
 
 ## Python関連の強化
 
@@ -348,7 +348,7 @@ Cloudwatchへの出力のための、アウトバウンドアダプタおよび�
 
 ```
 >aws cloudwatch put-metric-data --namespace MyNameSpace --metric-name TestMetric \ 
-	--dimensions TestKey=TestValue --value 100
+ --dimensions TestKey=TestValue --value 100
 ```
 
 Cloudwatchアウトバウンドアダプタ[EnsLib.AmazonCloudWatch.OutboundAdapter](https://docs.intersystems.com/iris20221/csp/documatic/%25CSP.Documatic.cls?&LIBRARY=ENSLIB&CLASSNAME=EnsLib.AmazonCloudWatch.OutboundAdapter)はCloudwatchが公開しているPutMetricData APIを呼び出すために、下記のメソッドを提供しています。
@@ -371,7 +371,7 @@ SNSへの出力のための、アウトバウンドアダプタおよびビジ�
 
 ```
 aws sns publish --topic-arn arn:aws:sns:ap-northeast-1:[AWSアカウントID]:my_topic \
-	--subject "Test mail" --message "Hello World"
+ --subject "Test mail" --message "Hello World"
 ```
 
 SNSアウトバウンドアダプタ[EnsLib.AmazonSNS.OutboundAdapter](https://docs.intersystems.com/iris20221/csp/documatic/%25CSP.Documatic.cls?LIBRARY=ENSLIB&CLASSNAME=EnsLib.AmazonSNS.OutboundAdapter)はSNSが公開しているpublish APIを呼び出すために、下記のメソッドを提供しています
@@ -389,18 +389,19 @@ IRISのKubernetesへのデプロイを容易にするために、新たに下記
 
 IKOについては[こちら](https://jp.community.intersystems.com/node/499776)をご覧ください。
 
-1. SAMおよびIAM
+### SAMおよびIAM
 
-	SAM(InterSystems System Alert and Monitoring)およびIAM(InterSystems API Manager)をデプロイ、管理できます。IRISクラスタをスケールさせる(そしてそれらの監視を行う)ことが用意になります。
+SAM(InterSystems System Alert and Monitoring)およびIAM(InterSystems API Manager)をデプロイ、管理できます。IRISクラスタをスケールさせる(そしてそれらの監視を行う)ことが用意になります。
 
-2. ロックダウンバージョンのIRISおよびWeb Gateway
+SAMに関しては、[こちら](https://jp.community.intersystems.com/node/498416)の記事を、IAMに関しては、[こちら](https://jp.community.intersystems.com/node/493416)の記事をごらんください。
 
-	[ロックダウンバージョン](https://docs.intersystems.com/iris20221/csp/docbook/DocBook.UI.Page.cls?KEY=ADOCK#ADOCK_iris_images_password_lockeddown)のIRISおよびWeb Gatewayをデプロイできます。Web GatewayはNginxもしくはApache版を選択可能です。
+### ロックダウンバージョンのIRISおよびWeb Gateway
 
+[ロックダウンバージョン](https://docs.intersystems.com/iris20221/csp/docbook/DocBook.UI.Page.cls?KEY=ADOCK#ADOCK_iris_images_password_lockeddown)のIRISおよびWeb Gatewayをデプロイできます。Web GatewayはNginxもしくはApache版を選択可能です。
 
-3. 非永続ボリュームおよび永続ボリューム
+### 非永続ボリュームおよび永続ボリューム
 
-	非永続ボリューム、永続ボリュームいずれへのデプロイが可能です。
+非永続ボリューム、永続ボリュームいずれへのデプロイが可能です。
 
 # その他
 新しくなったTRACEユーティリティを提供します。
