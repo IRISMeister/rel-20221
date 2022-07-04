@@ -1,3 +1,7 @@
+# IRISリリース2022.1のご紹介
+
+本稿は、[「InterSystems IRIS、IRIS for Health、HealthShare Health Connect 2022.1がリリースされました！」](https://jp.community.intersystems.com/node/519631)でご案内している内容を、補足解説する内容となります。
+
 # 紹介ビデオ
 米国本社プロダクトマネージャーによる本リリースのハイライトのご紹介ビデオ(英語)です。
 https://www.intersystems.com/resources/whats-new-in-intersystems-iris-2022-1
@@ -150,7 +154,7 @@ ADO.NET, Native API, Gateway(PEX)において、.NET5をサポートします。
 
 下記は、パートナ様の実データと実際に使用されているクエリを使用したベンチマーク測定の結果です。2021.1-2022.1間で、I/O量が25%減、実行時間が半分に改善されている事がわかります。
 
-![outlier](https://github.com/IRISMeister/rel-20221/blob/main/images/releases.png)
+![outlier](images/releases.png)
 
 ### スマートサンプリング & テーブル統計の自動化
 ブロックレベルでサンプリングを行うことで、今まで行単位で行っていたサンプリング(もしくはフルスキャン)による統計処理のコストを大幅に短縮しました。
