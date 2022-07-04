@@ -77,7 +77,7 @@ Set tSC = client.SendMessage(msg)
 ### 埋め込みPython
 言語としてObjectScriptが使用できるあらゆる場面でPythonを使用可能になります。
 
-使用例) [ePy.Test.cls](src/Sample/ePy/Test.cls)
+使用例) [ePy.Test.cls](https://github.com/IRISMeister/rel-20221/blob/main/src/Sample/ePy/Test.cls)
 
 > 実行環境としてのIRISとPythonは類似点が多く(インタプリタ、c言語実装、オブジェクトモデル)、同一プロセス空間で動作させるなど、他言語に比べて踏み込んだ統合を行っています。
 
@@ -150,7 +150,7 @@ ADO.NET, Native API, Gateway(PEX)において、.NET5をサポートします。
 
 下記は、パートナ様の実データと実際に使用されているクエリを使用したベンチマーク測定の結果です。2021.1-2022.1間で、I/O量が25%減、実行時間が半分に改善されている事がわかります。
 
-![outlier](images/releases.png)
+![outlier](https://github.com/IRISMeister/rel-20221/blob/main/images/releases.png)
 
 ### スマートサンプリング & テーブル統計の自動化
 ブロックレベルでサンプリングを行うことで、今まで行単位で行っていたサンプリング(もしくはフルスキャン)による統計処理のコストを大幅に短縮しました。
